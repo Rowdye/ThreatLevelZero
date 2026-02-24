@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://c3fxmfooxydji"]
+
+[ext_resource type="Script" uid="uid://dl7f1q4g0oa3m" path="res://scenes/entities/player.gd" id="1_ucweq"]
+[ext_resource type="Environment" uid="uid://d15cy8ugiut2r" path="res://settings/enviroment.tres" id="2_1ie0h"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ft3ro"]
+radius = 0.4
+height = 1.83
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_blnjl"]
+height = 1.85
+radius = 0.45
+
+[sub_resource type="SphereMesh" id="SphereMesh_ft3ro"]
+radius = 0.125
+height = 0.25
+
+[node name="Player" type="CharacterBody3D" unique_id=1577822824]
+physics_interpolation_mode = 1
+collision_layer = 24
+collision_mask = 49
+script = ExtResource("1_ucweq")
+
+[node name="WorldModel" type="Node3D" parent="." unique_id=329308725]
+unique_name_in_owner = true
+
+[node name="Face" type="Label3D" parent="WorldModel" unique_id=1017879526]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.03255821, 1.45, 0.4)
+pixel_size = 0.01
+shaded = true
+double_sided = false
+text = ": )"
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=479163555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+mesh = SubResource("CapsuleMesh_ft3ro")
+
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=664461137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+shape = SubResource("CylinderShape3D_blnjl")
+
+[node name="Hands" type="Node3D" parent="." unique_id=1588884615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="LeftHand" type="MeshInstance3D" parent="Hands" unique_id=92922879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, 0.25)
+mesh = SubResource("SphereMesh_ft3ro")
+
+[node name="Marker3D" type="Marker3D" parent="Hands/LeftHand" unique_id=870312431]
+
+[node name="RightHand" type="MeshInstance3D" parent="Hands" unique_id=1739190114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, 0.25)
+mesh = SubResource("SphereMesh_ft3ro")
+
+[node name="Marker3D" type="Marker3D" parent="Hands/RightHand" unique_id=1415463615]
+
+[node name="Head" type="Node3D" parent="." unique_id=2139421349]
+unique_name_in_owner = true
+
+[node name="ViewbobLayer" type="Node3D" parent="Head" unique_id=456801851]
+unique_name_in_owner = true
+
+[node name="RecoilLayer" type="Node3D" parent="Head/ViewbobLayer" unique_id=112226817]
+unique_name_in_owner = true
+
+[node name="MiscLayer" type="Node3D" parent="Head/ViewbobLayer/RecoilLayer" unique_id=1306727004]
+unique_name_in_owner = true
+
+[node name="PlayerCamera" type="Camera3D" parent="Head/ViewbobLayer/RecoilLayer/MiscLayer" unique_id=675327107]
+unique_name_in_owner = true
+physics_interpolation_mode = 1
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5, 0)
+cull_mask = 1048573
+environment = ExtResource("2_1ie0h")
+doppler_tracking = 2
+fov = 100.0
