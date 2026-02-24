@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://r2f8ytlsuine"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
+size = Vector3(0.3, 0.2, 1)
+
+[node name="StairsPiece" type="Node3D" unique_id=1400750739]
+
+[node name="Step" type="CSGMesh3D" parent="." unique_id=874297128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0.099999994, 0)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="Step2" type="CSGMesh3D" parent="." unique_id=245214872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14999999, 0.3, 0)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="Step3" type="CSGMesh3D" parent="." unique_id=2145772766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15000002, 0.5, 0)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="Step4" type="CSGMesh3D" parent="." unique_id=2118666133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45000005, 0.70000005, 0)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_0xm2m")
+
+[node name="Step5" type="CSGMesh3D" parent="." unique_id=783249314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.90000004, 0)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_0xm2m")
