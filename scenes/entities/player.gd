@@ -14,6 +14,10 @@ const HEADBOB_MOVE_AMOUNT: float = 0.06
 const HEADBOB_FREQUENCY: float = 2.4
 var headbob_time: float = 0.0
 
+const MAX_STEP_HEIGHT = 0.5
+var snapped_to_stairs_last_frame: bool = false
+var last_frame_on_floor = -INF
+
 @export var jump_velocity: float = 5.5
 
 @export var air_cap: float = 0.85
@@ -45,18 +49,25 @@ func get_move_speed() -> float:
 	return sprint_speed if Input.is_action_pressed("sprint") else walk_speed
 
 func _physics_process(delta: float) -> void:
+	if is_on_floor(): last_frame_on_floor = Engine.get_physics_frames()
+	
 	var input_dir = Input.get_vector("left", "right", "forward", "backward").normalized()
 	wish_dir = self.global_transform.basis * Vector3(-input_dir.x, 0., -input_dir.y)
 	noclip_cam_wish_dir = %PlayerCamera.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
 	if not handle_noclip(delta):
-		if is_on_floor():
+		if is_on_floor() or snapped_to_stairs_last_frame:
 			handle_ground_physics(delta)
 			if Input.is_action_just_pressed("jump"):
 				self.velocity.y = jump_velocity
 		else:
 			handle_air_physics(delta)
-		move_and_slide()
+		
+		if not snap_up_stairs(delta):
+			move_and_slide()
+			snap_down_stairs()
+	
+	smooth_camera_to_origin(delta)
 
 func handle_ground_physics(delta) -> void:
 	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
@@ -110,6 +121,21 @@ func handle_noclip(delta) -> bool:
 func _process(delta: float) -> void:
 	pass
 
+var camera_origin_pos = null
+func save_camera_origin_smoothing():
+	if camera_origin_pos == null:
+		camera_origin_pos = %SmoothLayer.global_position
+
+func smooth_camera_to_origin(delta):
+	if camera_origin_pos == null: return
+	%SmoothLayer.global_position.y = camera_origin_pos.y
+	%SmoothLayer.position.y = clampf(%SmoothLayer.position.y, -0.7, 0.7)
+	var move_amount = max(self.velocity.length() * delta, walk_speed/2 * delta)
+	%SmoothLayer.position.y = move_toward(%SmoothLayer.position.y, 0.0, move_amount)
+	camera_origin_pos = %SmoothLayer.global_position
+	if %SmoothLayer.position.y == 0:
+		camera_origin_pos = null
+
 func headbob_effect(delta) -> void:
 	headbob_time += delta * self.velocity.length()
 	%ViewbobLayer.transform.origin = Vector3(
@@ -117,3 +143,46 @@ func headbob_effect(delta) -> void:
 		sin(headbob_time * HEADBOB_FREQUENCY) * HEADBOB_MOVE_AMOUNT,
 		0
 	)
+
+func is_surface_steep(normal: Vector3) -> bool:
+	return normal.angle_to(Vector3.UP) > self.floor_max_angle
+
+func run_body_test_motion(from: Transform3D, motion: Vector3, result = null) -> bool:
+	if not result: result = PhysicsTestMotionResult3D.new()
+	var params = PhysicsTestMotionParameters3D.new()
+	params.from = from
+	params.motion = motion
+	return PhysicsServer3D.body_test_motion(self.get_rid(), params, result)
+
+func snap_down_stairs() -> void:
+	var did_snap: bool = false
+	var floor_below: bool = %StairsUnderRaycast.is_colliding() and not is_surface_steep(%StairsUnderRaycast.get_collision_normal())
+	var on_floor_last_frame: bool = Engine.get_physics_frames() - last_frame_on_floor == 1
+	if not is_on_floor() and velocity.y <= 0 and (on_floor_last_frame or snapped_to_stairs_last_frame) and floor_below:
+		var body_test_result = PhysicsTestMotionResult3D.new()
+		if run_body_test_motion(self.global_transform, Vector3(0, -MAX_STEP_HEIGHT, 0), body_test_result):
+			save_camera_origin_smoothing()
+			var translate_y = body_test_result.get_travel().y
+			self.position.y += translate_y
+			apply_floor_snap()
+			did_snap = true
+	snapped_to_stairs_last_frame = did_snap
+
+func snap_up_stairs(delta) -> bool:
+	if not is_on_floor() and not snapped_to_stairs_last_frame: return false
+	
+	var expected_move_motion = self.velocity * Vector3(1,0,1) * delta
+	var step_pos_clearance = self.global_transform.translated(expected_move_motion + Vector3(0, MAX_STEP_HEIGHT * 2, 0))
+	var down_result = PhysicsTestMotionResult3D.new()
+	if (run_body_test_motion(step_pos_clearance, Vector3(0, -MAX_STEP_HEIGHT * 2, 0), down_result)) and (down_result.get_collider().is_class("StaticBody3D") or down_result.get_collider().is_class("CSGShape3D")):
+		var step_height = ((step_pos_clearance.origin + down_result.get_travel()) - self.global_position).y
+		if step_height > MAX_STEP_HEIGHT or step_height <= 0.01 or (down_result.get_collision_point() - self.global_position).y > MAX_STEP_HEIGHT: return false
+		%StairsFrontRaycast.global_position = down_result.get_collision_point() + Vector3(0, MAX_STEP_HEIGHT, 0) + expected_move_motion.normalized() * 0.1
+		%StairsFrontRaycast.force_raycast_update()
+		if %StairsFrontRaycast.is_colliding() and not is_surface_steep(%StairsFrontRaycast.get_collision_normal()):
+			save_camera_origin_smoothing()
+			self.global_position = step_pos_clearance.origin + down_result.get_travel()
+			apply_floor_snap()
+			snapped_to_stairs_last_frame = true
+			return true
+	return false

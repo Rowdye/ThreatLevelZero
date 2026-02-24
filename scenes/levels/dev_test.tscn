@@ -50,16 +50,6 @@ size = Vector3(1, 0.2, 1)
 
 [node name="Player" parent="." unique_id=1577822824 instance=ExtResource("2_ufac7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -1.5)
-look_sens = null
-walk_speed = null
-sprint_speed = null
-ground_accel = null
-ground_decel = null
-ground_friction = null
-jump_velocity = null
-air_cap = null
-air_accel = null
-air_move_speed = null
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1961532253]
 transform = Transform3D(-0.39073116, -0.8593653, 0.32987946, 0, 0.35836798, 0.93358046, -0.92050487, 0.36477894, -0.14002553, 0, 10.5, 0)
@@ -167,12 +157,12 @@ mesh = SubResource("BoxMesh_272bh")
 [node name="Label1m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1973085140]
 transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500012, -3)
 texture_filter = 2
-text = "3m"
+text = "3m (easy)"
 
 [node name="Label2m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1742678874]
 transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500012, -1)
 texture_filter = 2
-text = "4m"
+text = "4m (max walk jump)"
 
 [node name="Label3m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1302352250]
 transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500012, 1)
