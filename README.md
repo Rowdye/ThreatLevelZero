@@ -9,61 +9,65 @@ After abandoning all efforts to take control of the zone, the military nuked the
 
 # Game Content Ideas
 At home base, players choose what objective to go to. Some objectives are further away than others, which costs more fuel but tend to reduce threat level further. Some objective ideas:
-• Eliminate horde / nest, plant a bomb in a zombie horde or hot spot
-• Fix radio tower, repair cables and radio box, then restart generator
-• Rescue mission, find injured survivors and bring them to safety
-• Build barricades, block off multiple entrances with barricades
-• Charge batteries, carry and insert four large battery banks to the charger and defend
-• Take power reactor, find the generator room and take the reactor out and return it to the car
-• Time survival, enter the area and survive, the longer you live, the more threat is removed
-• Kill target, find and kill the Tank
-• Loot overrun survivor base, creates high threat in return for good loot
-• More when I think of them.
+
+Eliminate horde / nest, plant a bomb in a zombie horde or hot spot
+Fix radio tower, repair cables and radio box, then restart generator
+Rescue mission, find injured survivors and bring them to safety
+Build barricades, block off multiple entrances with barricades
+Charge batteries, carry and insert four large battery banks to the charger and defend
+Take power reactor, find the generator room and take the reactor out and return it to the car
+Time survival, enter the area and survive, the longer you live, the more threat is removed
+Kill target, find and kill the Tank
+Loot overrun survivor base, creates high threat in return for good loot
+More when I think of them.
 
 Objectives are also sometimes accompanied by secondary objectives, which are just normal objectives but the requirements are lower and easier. The benefits of doing these are undecided (maybe revive dead players?) 
 
 There is a chance of weather in the area upon arrival, or weather developing / clearing mid round. With base upgrades you can scout weather on objectives. Some weathers are:
-• Clear, most common weather, standard way of playing
-• Windy, outside enemies have reduced hearing but scent travels further in the wind direction
-• Radiation smog, slightly reduced vis, being outside for too long will build up radiation and begin to hurt you. Worse if you have a broken gas mask. Certain monsters are empowered by it
-• Storm, can be dry or wet, lightning randomly strikes outside and on metallic objects. Higher the elevation, the higher the chance
-• Electrical interference, electronics will malfunction randomly such as static-y radios, flashlights are faint, batteries drain rapidly, etc.
-• Unusual darkness, no matter the time of day it will be dark, allowing certain monsters to spawn early
-• Fog, severely reduced visibility, can be paired with radiation smog for much more dangerous build up
-• Definitely more can be added to the list.
+
+Clear, most common weather, standard way of playing
+Windy, outside enemies have reduced hearing but scent travels further in the wind direction
+Radiation smog, slightly reduced vis, being outside for too long will build up radiation and begin to hurt you. Worse if you have a broken gas mask. Certain monsters are empowered by it
+Storm, can be dry or wet, lightning randomly strikes outside and on metallic objects. Higher the elevation, the higher the chance
+Electrical interference, electronics will malfunction randomly such as static-y radios, flashlights are faint, batteries drain rapidly, etc.
+Unusual darkness, no matter the time of day it will be dark, allowing certain monsters to spawn early
+Fog, severely reduced visibility, can be paired with radiation smog for much more dangerous build up
+Definitely more can be added to the list.
 
 On top of these two factors, there is also a random modifier. They are typically revealed, but a chance to be unknown. Can be always shown with an upgrade:
-• None, most common and standard game-play
-• High density, enemies are more prominent in the area
-• Low density, as above but reversed
-• High alert, enemies' senses are more aware
-• Poor air quality, you move slower and stamina is reduced outside
-• Clear air quality, you move faster and stamina is increased outside
-• Desperate, enemies deal more damage but have less health
-• Light loot, loot value is generally worse but weighs less
-• Heavy loot, loot value is generally better but weighs more
-• Big ones, only tough enemies
-• Small ones, only weak enemies
-• Special ones, all except normal zombies spawn. Much less enemies than usual
-• Normal ones, only normal zombies spawn, more enemies than usual
-• Trap galore, greatly increased amount of traps indoors and outdoors, less enemies
-• Time limit, at a random time between 6pm and midnight, the radiation will rapidly ramp up, eventually resulting in inevitable death if you stay for too long
-• Probably enough, can't think of anything else.
+
+None, most common and standard game-play
+High density, enemies are more prominent in the area
+Low density, as above but reversed
+High alert, enemies' senses are more aware
+Poor air quality, you move slower and stamina is reduced outside
+Clear air quality, you move faster and stamina is increased outside
+Desperate, enemies deal more damage but have less health
+Light loot, loot value is generally worse but weighs less
+Heavy loot, loot value is generally better but weighs more
+Big ones, only tough enemies
+Small ones, only weak enemies
+Special ones, all except normal zombies spawn. Much less enemies than usual
+Normal ones, only normal zombies spawn, more enemies than usual
+Trap galore, greatly increased amount of traps indoors and outdoors, less enemies
+Time limit, at a random time between 6pm and midnight, the radiation will rapidly ramp up, eventually resulting in inevitable death if you stay for too long
+Probably enough, can't think of anything else.
 
 Upon selecting an objective, players arrive by car. The car can be upgraded with parts found at objectives to increase storage, improve fuel economy, muffler to reduce threat gained, etc. The car key will be given to a random survivor. They can drop it to give to someone else but if the key is lost, the car will have to be hot-wired which takes time, makes noise, and costs extra fuel. Survivors attempt to do the objective while enemies wander around the map. List of some enemy ideas:
-• Zombie, drags itself around till it senses a survivor, then shambles towards them. Once within close proximity, it will speed up and lunge at the player to do damage
-• Big Zombie, same as Zombie but slower and tougher. Swings to attack you most of the time, but can charge occasionally. Will always grab if it’s charge hits you
-• Spitter Zombie, gives off radiation in a small area, can spit a medium sized puddle of radioactive sludge at a distance every so often, and leaves a small puddle on death (L4D2 Spitter)
-• Tank, very big, high health pool, and muscular zombie that runs at survivors. Considered a boss zombie, and is very rare. Can only fit in large spaces, and is usually only outside. Swings and punches will fling survivors. Can throw rocks at survivors that are too far or unreachable (L4D2 Tank)
-• Long Zombie, takes mass from its own body to give to its arm to extend it towards survivors and grabs them from long distances. (L4D2 Smoker) Less health when grabbing, but strong when not. Prioritises those away from the group
-• Dog Zombie, very agile and fast enemy that hunts down weak survivors. Jumps and pins survivors (L4D2 Hunter)
-• "Ethereal Walker", a mystical creature that lurks in the dark, getting behind survivors to instantly kill them. It is deadly silent and only scatters away when in light or shined at. Appears mostly at night but anytime in dark areas (LC Bracken / Flowerman)
-• Survivor, 50/50 chance of being hostile or friendly. On sight of a player, if hostile it will shoot survivors on sight, and when friendly they will run away
-• Thief, a radiated and mutated survivor that targets the player with the most valuables, jumps on them and steals a random item, then runs away
-• "Swarmer", a mutated animal that sends out small bugs from its body to crawl over players, forcing them to kill the host or use AoE weapons. Bugs will slow down survivors and affect their aim, but otherwise does very little damage to full health survivors, however will do more damage depending on how low the affected survivor’s health is.
-• "Decoy Beast", a cunning creature which mimics human voices and player-related sounds to lure survivors closer to them, then attack them. Can disguise as a random survivor. Only appears when a survivor has died (LC Masked)
-• Infector, the only enemy capable of passing the infection. A big blob that crawls around slowly, spewing out spores in an area. Having an open wound or broken gas mask will likely get you infected.
-• All my ideas for now. I want less zombie ideas and more mutated animals or creatures
+
+Zombie, drags itself around till it senses a survivor, then shambles towards them. Once within close proximity, it will speed up and lunge at the player to do damage
+Big Zombie, same as Zombie but slower and tougher. Swings to attack you most of the time, but can charge occasionally. Will always grab if it’s charge hits you
+Spitter Zombie, gives off radiation in a small area, can spit a medium sized puddle of radioactive sludge at a distance every so often, and leaves a small puddle on death (L4D2 Spitter)
+Tank, very big, high health pool, and muscular zombie that runs at survivors. Considered a boss zombie, and is very rare. Can only fit in large spaces, and is usually only outside. Swings and punches will fling survivors. Can throw rocks at survivors that are too far or unreachable (L4D2 Tank)
+Long Zombie, takes mass from its own body to give to its arm to extend it towards survivors and grabs them from long distances. (L4D2 Smoker) Less health when grabbing, but strong when not. Prioritises those away from the group
+Dog Zombie, very agile and fast enemy that hunts down weak survivors. Jumps and pins survivors (L4D2 Hunter)
+"Ethereal Walker", a mystical creature that lurks in the dark, getting behind survivors to instantly kill them. It is deadly silent and only scatters away when in light or shined at. Appears mostly at night but anytime in dark areas (LC Bracken / Flowerman)
+Survivor, 50/50 chance of being hostile or friendly. On sight of a player, if hostile it will shoot survivors on sight, and when friendly they will run away
+Thief, a radiated and mutated survivor that targets the player with the most valuables, jumps on them and steals a random item, then runs away
+"Swarmer", a mutated animal that sends out small bugs from its body to crawl over players, forcing them to kill the host or use AoE weapons. Bugs will slow down survivors and affect their aim, but otherwise does very little damage to full health survivors, however will do more damage depending on how low the affected survivor’s health is.
+"Decoy Beast", a cunning creature which mimics human voices and player-related sounds to lure survivors closer to them, then attack them. Can disguise as a random survivor. Only appears when a survivor has died (LC Masked)
+Infector, the only enemy capable of passing the infection. A big blob that crawls around slowly, spewing out spores in an area. Having an open wound or broken gas mask will likely get you infected.
+All my ideas for now. I want less zombie ideas and more mutated animals or creatures
 
 # Gameplay
 Survivors collect scrap at objectives, which is 'money', but can also find buildings, weapons, and parts which can be taken back to home base to be used for defence or improvements. The car only holds so much without upgrades or extensions so careful choices will have to be made. A Survivor is also affected by weight, so too many heavy items can slow you down, increase stamina drain, and drastically increase fall damage. Survivors can drop their bag after a brief delay, useful in scenarios where they need to escape quickly, but leave a lot of their ammo in their bags and have reduced inventory slots.
