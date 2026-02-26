@@ -20,19 +20,17 @@ albedo_color = Color(0.96518403, 0.3167259, 9.62615e-07, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
 size = Vector3(100, 5, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_1bvp3"]
+[sub_resource type="BoxMesh" id="BoxMesh_ufac7"]
+size = Vector3(1, 5, 5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_lquwl"]
-size = Vector3(2, 2, 2)
+[sub_resource type="BoxMesh" id="BoxMesh_ispid"]
+size = Vector3(10, 1, 10)
 
-[sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
-size = Vector3(3, 3, 3)
+[sub_resource type="BoxMesh" id="BoxMesh_42hnw"]
+size = Vector3(20, 1, 5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_272bh"]
-size = Vector3(1, 0.2, 8)
-
-[sub_resource type="BoxMesh" id="BoxMesh_dg77c"]
-size = Vector3(2, 0.2, 3.5)
+[sub_resource type="BoxMesh" id="BoxMesh_r3y7d"]
+size = Vector3(1, 0.2, 9.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_5vw27"]
 size = Vector3(1, 0.2, 1)
@@ -40,16 +38,39 @@ size = Vector3(1, 0.2, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_kek77"]
 size = Vector3(1, 0.2, 1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_dg77c"]
+size = Vector3(2, 0.2, 3.5)
+
 [sub_resource type="BoxMesh" id="BoxMesh_4c57u"]
 size = Vector3(1, 0.2, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_efxa6"]
 size = Vector3(1, 0.2, 1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_1bvp3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_si0tr"]
+size = Vector3(1.2, 1.2, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jfd8x"]
+size = Vector3(1.9, 1.9, 1.9)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lquwl"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="TorusMesh" id="TorusMesh_42hnw"]
+
+[sub_resource type="TextMesh" id="TextMesh_r3y7d"]
+text = "yo wassup"
+font_size = 127
+
 [node name="DevTest" type="Node3D" unique_id=123602918]
 
 [node name="Player" parent="." unique_id=1577822824 instance=ExtResource("2_ufac7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.25, 8)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1961532253]
 transform = Transform3D(-0.39073116, -0.8593653, 0.32987946, 0, 0.35836798, 0.93358046, -0.92050487, 0.36477894, -0.14002553, 0, 10.5, 0)
@@ -65,68 +86,60 @@ collision_mask = 0
 mesh = SubResource("BoxMesh_7dm0k")
 
 [node name="+xWall" type="CSGMesh3D" parent="." unique_id=1916696632]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 2.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2.5, 0)
 use_collision = true
 collision_mask = 0
 mesh = SubResource("BoxMesh_ig7tw")
 material = SubResource("StandardMaterial3D_0xm2m")
 
 [node name="+zWall" type="CSGMesh3D" parent="." unique_id=449240491]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 22.25)
 use_collision = true
 collision_mask = 0
 mesh = SubResource("BoxMesh_h2yge")
 material = SubResource("StandardMaterial3D_0xm2m")
 
 [node name="-xWall" type="CSGMesh3D" parent="." unique_id=364028173]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -50, 2.5, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -13.25, 2.5, 0)
 use_collision = true
 collision_mask = 0
 mesh = SubResource("BoxMesh_ig7tw")
 material = SubResource("StandardMaterial3D_0xm2m")
 
 [node name="-zWall" type="CSGMesh3D" parent="." unique_id=688969368]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2.5, -50)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2.5, -6.75)
 use_collision = true
 collision_mask = 0
 mesh = SubResource("BoxMesh_h2yge")
 material = SubResource("StandardMaterial3D_0xm2m")
 
-[node name="Cubes" type="Node3D" parent="." unique_id=860760908]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 3.5)
-
-[node name="1mCube" type="CSGMesh3D" parent="Cubes" unique_id=982221685]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 0.5, -3.5)
+[node name="Wall" type="CSGMesh3D" parent="." unique_id=1726385534]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2.5, 19.25)
 use_collision = true
 collision_mask = 0
-mesh = SubResource("BoxMesh_1bvp3")
+mesh = SubResource("BoxMesh_ufac7")
+material = SubResource("StandardMaterial3D_0xm2m")
 
-[node name="Label3D" type="Label3D" parent="Cubes/1mCube" unique_id=764630286]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.50448704, 0, 0)
-texture_filter = 2
-text = "1m Cube"
-
-[node name="2mCube" type="CSGMesh3D" parent="Cubes" unique_id=1005583215]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 1, -1)
+[node name="Wall2" type="CSGMesh3D" parent="." unique_id=805218492]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 15, 2.5, 13.25)
 use_collision = true
 collision_mask = 0
-mesh = SubResource("BoxMesh_lquwl")
+mesh = SubResource("BoxMesh_ufac7")
+material = SubResource("StandardMaterial3D_0xm2m")
 
-[node name="Label3D" type="Label3D" parent="Cubes/2mCube" unique_id=776954792]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.004487, 0, 0)
-texture_filter = 2
-text = "2m Cube"
-
-[node name="3mCube" type="CSGMesh3D" parent="Cubes" unique_id=1803693109]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 1.5, 2.5)
+[node name="Wall3" type="CSGMesh3D" parent="." unique_id=525369147]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 13.5, 4.5, 17.75)
 use_collision = true
 collision_mask = 0
-mesh = SubResource("BoxMesh_7mycd")
+mesh = SubResource("BoxMesh_ispid")
+material = SubResource("StandardMaterial3D_0xm2m")
 
-[node name="Label3D" type="Label3D" parent="Cubes/3mCube" unique_id=368801286]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.504487, 0, 0)
-texture_filter = 2
-text = "3m Cube"
+[node name="Wall4" type="CSGMesh3D" parent="." unique_id=568456872]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.25, 4.5, 7.5)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_42hnw")
+material = SubResource("StandardMaterial3D_0xm2m")
 
 [node name="JumpingDistanceTest" type="Node3D" parent="." unique_id=832695585]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.25)
@@ -141,62 +154,136 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.1
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.1, -4.8428774e-08, -7.9)
 
 [node name="StairsPiece3" parent="JumpingDistanceTest" unique_id=1812543411 instance=ExtResource("1_uy3bk")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -3.1, 0.99999994, 6.3999996)
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -3.1, 0.99999994, 7.8999996)
 
 [node name="StairsPiece6" parent="JumpingDistanceTest" unique_id=1210872784 instance=ExtResource("1_uy3bk")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -3.1, -3.3527613e-08, 7.8999996)
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -3.1, -3.3527613e-08, 9.4)
 
 [node name="StairsPiece4" parent="JumpingDistanceTest" unique_id=1706694585 instance=ExtResource("1_uy3bk")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -3.1, 2, 4.8999996)
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -3.1, 2, 6.3999996)
 
 [node name="JumpingPlatform" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=977846725]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1, 3.1000001, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1, 3.1000001, 0.75)
 use_collision = true
-mesh = SubResource("BoxMesh_272bh")
+mesh = SubResource("BoxMesh_r3y7d")
 
-[node name="Label1m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1973085140]
-transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500012, -3)
+[node name="Label3m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1973085140]
+transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500024, -3.75)
 texture_filter = 2
-text = "3m (easy)"
+text = "3m (walk-jump)"
 
-[node name="Label2m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1742678874]
-transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500012, -1)
+[node name="Label4m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1742678874]
+transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500024, -1.75)
 texture_filter = 2
-text = "4m (max walk jump)"
+text = "4m (max walk-jump)"
 
-[node name="Label3m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1302352250]
-transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500012, 1)
+[node name="Label5m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=1302352250]
+transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500024, 0.25)
 texture_filter = 2
-text = "5m (running jump)"
+text = "5m (run-jump)"
 
-[node name="Label4m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=2039244613]
-transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500012, 3)
+[node name="Label6m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=2039244613]
+transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500024, 2.25)
 texture_filter = 2
-text = "6m (impossible)"
+text = "6m (run crouch-jump)"
+
+[node name="Label7m" type="Label3D" parent="JumpingDistanceTest/JumpingPlatform" unique_id=655906333]
+transform = Transform3D(1.9106855e-15, 1, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 1, 0, -4.371139e-08, 0.020512104, 0.12500024, 4)
+texture_filter = 2
+text = ">6m (impossible)"
+
+[node name="Platform3m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=1835259878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.099999905, 3.1000001, -3)
+use_collision = true
+mesh = SubResource("BoxMesh_5vw27")
+
+[node name="Platform4m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=608379015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9000001, 3.1000001, -1)
+use_collision = true
+mesh = SubResource("BoxMesh_kek77")
 
 [node name="RunningJumpingPlatform" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=523072906]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6, 3.1000001, 2.25)
 use_collision = true
 mesh = SubResource("BoxMesh_dg77c")
 
-[node name="Platform1m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=1835259878]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.099999905, 3.1000001, -3)
-use_collision = true
-mesh = SubResource("BoxMesh_5vw27")
-
-[node name="Platform2m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=608379015]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9000001, 3.1000001, -1)
-use_collision = true
-mesh = SubResource("BoxMesh_kek77")
-
-[node name="Platform3m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=298585128]
+[node name="Platform5m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=298585128]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9000001, 3.1000001, 1)
 use_collision = true
 mesh = SubResource("BoxMesh_4c57u")
 
-[node name="Platform4m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=560583190]
+[node name="Platform6m" type="CSGMesh3D" parent="JumpingDistanceTest" unique_id=560583190]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 3.1000001, 3)
 use_collision = true
 mesh = SubResource("BoxMesh_efxa6")
 
 [node name="JumpingHeightTest" type="Node3D" parent="." unique_id=1304594844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.75, 0, 2.5)
+
+[node name="1mCube" type="CSGMesh3D" parent="JumpingHeightTest" unique_id=982221685]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 0.5, -5.25)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_1bvp3")
+
+[node name="Label3D" type="Label3D" parent="JumpingHeightTest/1mCube" unique_id=764630286]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.50448704, 0, 0)
+texture_filter = 2
+text = "1m"
+
+[node name="1_5mCube" type="CSGMesh3D" parent="JumpingHeightTest" unique_id=552646333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 0.59999996, -3)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_si0tr")
+
+[node name="Label3D" type="Label3D" parent="JumpingHeightTest/1_5mCube" unique_id=102526761]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.60448706, 0, 0)
+pixel_size = 0.004
+texture_filter = 2
+text = "1.5m (max jump)"
+
+[node name="1_9mCube" type="CSGMesh3D" parent="JumpingHeightTest" unique_id=432624512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.9499999, -0.35000002)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_jfd8x")
+
+[node name="Label3D" type="Label3D" parent="JumpingHeightTest/1_9mCube" unique_id=1538517973]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.954487, 0, 0)
+texture_filter = 2
+text = "1.9m (max crouch-jump)"
+
+[node name="2mCube" type="CSGMesh3D" parent="JumpingHeightTest" unique_id=1005583215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 1, 2.5)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_lquwl")
+
+[node name="Label3D" type="Label3D" parent="JumpingHeightTest/2mCube" unique_id=776954792]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.004487, 0, 0)
+texture_filter = 2
+text = "2m"
+
+[node name="3mCube" type="CSGMesh3D" parent="JumpingHeightTest" unique_id=1803693109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 1.5, 6)
+use_collision = true
+collision_mask = 0
+mesh = SubResource("BoxMesh_7mycd")
+
+[node name="Label3D" type="Label3D" parent="JumpingHeightTest/3mCube" unique_id=368801286]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.504487, 0, 0)
+texture_filter = 2
+text = "3m"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1265178717]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 13.75, 2, 19.25)
+mesh = SubResource("TorusMesh_42hnw")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2099027560]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.75, 2.75, 18.25)
+shadow_enabled = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=287939095]
+transform = Transform3D(-2.6, 0, -8.7422784e-08, 0, 3.1000001, 0, 2.2729921e-07, 0, -1.0000001, -1.75, 3.25, 21.75)
+mesh = SubResource("TextMesh_r3y7d")

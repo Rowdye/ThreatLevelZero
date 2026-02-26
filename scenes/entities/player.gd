@@ -14,6 +14,10 @@ const HEADBOB_MOVE_AMOUNT: float = 0.06
 const HEADBOB_FREQUENCY: float = 2.4
 var headbob_time: float = 0.0
 
+const CROUCH_TRANSLATE: float = 0.7
+const CROUCH_JUMP_ADD = CROUCH_TRANSLATE * 1.0
+var is_crouched: bool = false
+
 const MAX_STEP_HEIGHT = 0.5
 var snapped_to_stairs_last_frame: bool = false
 var last_frame_on_floor = -INF
@@ -46,6 +50,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	%PlayerCamera.rotation.x = clamp(%PlayerCamera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 func get_move_speed() -> float:
+	if is_crouched:
+		return walk_speed * 0.5
 	return sprint_speed if Input.is_action_pressed("sprint") else walk_speed
 
 func _physics_process(delta: float) -> void:
@@ -54,6 +60,8 @@ func _physics_process(delta: float) -> void:
 	var input_dir = Input.get_vector("left", "right", "forward", "backward").normalized()
 	wish_dir = self.global_transform.basis * Vector3(-input_dir.x, 0., -input_dir.y)
 	noclip_cam_wish_dir = %PlayerCamera.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
+	
+	handle_crouch(delta)
 	
 	if not handle_noclip(delta):
 		if is_on_floor() or snapped_to_stairs_last_frame:
@@ -97,6 +105,30 @@ func handle_air_physics(delta) -> void:
 		var accel_speed = air_accel * air_move_speed * delta
 		accel_speed = min(accel_speed, add_speed_until_cap)
 		self.velocity += accel_speed * wish_dir
+
+@onready var orig_standing_height = $Collider.shape.height
+
+func handle_crouch(delta) -> void:
+	var crouched_last_frame = is_crouched
+	if Input.is_action_pressed("crouch"):
+		is_crouched = true
+	elif is_crouched and not self.test_move(self.transform, Vector3(0, CROUCH_TRANSLATE, 0)) and is_on_floor():
+		is_crouched = false
+	
+	var translate_y_check: float = 0.0
+	if crouched_last_frame != is_crouched and not is_on_floor() and not snapped_to_stairs_last_frame:
+		translate_y_check = CROUCH_JUMP_ADD if is_crouched else -CROUCH_JUMP_ADD
+	
+	if translate_y_check != 0.0:
+		var result = KinematicCollision3D.new()
+		self.test_move(self.transform, Vector3(0, translate_y_check, 0), result)
+		self.position.y += result.get_travel().y
+		%Head.position.y -= result.get_travel().y
+		%Head.position.y = clampf(%Head.position.y, -CROUCH_TRANSLATE, 0)
+	
+	%Head.position.y = move_toward(%Head.position.y,-CROUCH_TRANSLATE if is_crouched else 0, 5.0 * delta)
+	$Collider.shape.height = orig_standing_height - CROUCH_TRANSLATE if is_crouched else orig_standing_height
+	$Collider.position.y = $Collider.shape.height / 2
 
 func handle_noclip(delta) -> bool:
 	if Input.is_action_just_pressed("dev_noclip") and OS.has_feature("debug"):

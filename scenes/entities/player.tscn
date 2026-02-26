@@ -21,25 +21,28 @@ collision_layer = 24
 collision_mask = 49
 script = ExtResource("1_ucweq")
 
-[node name="Head" type="Node3D" parent="." unique_id=2139421349]
+[node name="HeadContainer" type="Node3D" parent="." unique_id=2139421349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Head" type="Node3D" parent="HeadContainer" unique_id=1897056726]
 unique_name_in_owner = true
 
-[node name="ViewbobLayer" type="Node3D" parent="Head" unique_id=456801851]
+[node name="ViewbobLayer" type="Node3D" parent="HeadContainer/Head" unique_id=456801851]
 unique_name_in_owner = true
 
-[node name="RecoilLayer" type="Node3D" parent="Head/ViewbobLayer" unique_id=112226817]
+[node name="RecoilLayer" type="Node3D" parent="HeadContainer/Head/ViewbobLayer" unique_id=112226817]
 unique_name_in_owner = true
 
-[node name="SmoothLayer" type="Node3D" parent="Head/ViewbobLayer/RecoilLayer" unique_id=195649287]
+[node name="SmoothLayer" type="Node3D" parent="HeadContainer/Head/ViewbobLayer/RecoilLayer" unique_id=195649287]
 unique_name_in_owner = true
 
-[node name="MiscLayer" type="Node3D" parent="Head/ViewbobLayer/RecoilLayer/SmoothLayer" unique_id=1306727004]
+[node name="MiscLayer" type="Node3D" parent="HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer" unique_id=1306727004]
 unique_name_in_owner = true
 
-[node name="PlayerCamera" type="Camera3D" parent="Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer" unique_id=675327107]
+[node name="PlayerCamera" type="Camera3D" parent="HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer" unique_id=675327107]
 unique_name_in_owner = true
 physics_interpolation_mode = 1
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 cull_mask = 1048573
 environment = ExtResource("2_1ie0h")
 doppler_tracking = 2
