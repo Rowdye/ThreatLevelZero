@@ -112,7 +112,7 @@ func handle_crouch(delta) -> void:
 	var crouched_last_frame = is_crouched
 	if Input.is_action_pressed("crouch"):
 		is_crouched = true
-	elif is_crouched and not self.test_move(self.transform, Vector3(0, CROUCH_TRANSLATE, 0)) and is_on_floor():
+	elif is_crouched and not self.test_move(self.global_transform, Vector3(0, CROUCH_TRANSLATE, 0)) and is_on_floor():
 		is_crouched = false
 	
 	var translate_y_check: float = 0.0
@@ -121,7 +121,7 @@ func handle_crouch(delta) -> void:
 	
 	if translate_y_check != 0.0:
 		var result = KinematicCollision3D.new()
-		self.test_move(self.transform, Vector3(0, translate_y_check, 0), result)
+		self.test_move(self.global_transform, Vector3(0, translate_y_check, 0), result)
 		self.position.y += result.get_travel().y
 		%Head.position.y -= result.get_travel().y
 		%Head.position.y = clampf(%Head.position.y, -CROUCH_TRANSLATE, 0)
@@ -202,6 +202,7 @@ func snap_down_stairs() -> void:
 
 func snap_up_stairs(delta) -> bool:
 	if not is_on_floor() and not snapped_to_stairs_last_frame: return false
+	if self.velocity.y > 0 or (self.velocity * Vector3(1, 0, 1)).length() == 0: return false
 	
 	var expected_move_motion = self.velocity * Vector3(1,0,1) * delta
 	var step_pos_clearance = self.global_transform.translated(expected_move_motion + Vector3(0, MAX_STEP_HEIGHT * 2, 0))

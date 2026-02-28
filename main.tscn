@@ -20,6 +20,7 @@ attributes = SubResource("CameraAttributesPractical_h2yge")
 fov = 37.849285
 near = 0.05
 far = 4000.0
+ca_max_samples = 8
 
 [node name="DevTest" parent="Projection/ProjectionInput" parent_id_path=PackedInt32Array(2131587968, 1493971111) index="0" unique_id=123602918 instance=ExtResource("4_1bvp3")]
 
