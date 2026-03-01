@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://lmgetj2ah0bn"]
+
+[ext_resource type="Script" uid="uid://no2a3yu1gfng" path="res://ui_manager.gd" id="1_rwj1f"]
+
+[node name="UIManager" type="Control" unique_id=470333724]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_rwj1f")
+
+[node name="InteractionLabel" type="Label" parent="." unique_id=48512133]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = 19.0
+offset_right = 21.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.49019608)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+text = "Open"
+horizontal_alignment = 1
+vertical_alignment = 1

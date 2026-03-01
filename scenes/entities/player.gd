@@ -4,11 +4,13 @@ extends CharacterBody3D
 
 var wish_dir: Vector3 = Vector3.ZERO
 
+@export var ground_friction: float = 5.0
 @export var walk_speed: float = 3.5
+@export var walk_accel: float = 15.0
+@export var walk_decel: float = 5.0
 @export var sprint_speed: float = 5.0
-@export var ground_accel: float = 17.0
-@export var ground_decel: float = 5.0
-@export var ground_friction: float = 4.0
+@export var sprint_accel: float = 2.5
+@export var sprint_decel: float = 1.0
 
 const HEADBOB_MOVE_AMOUNT: float = 0.06
 const HEADBOB_FREQUENCY: float = 2.4
@@ -24,9 +26,11 @@ var last_frame_on_floor = -INF
 
 @export var jump_velocity: float = 5.5
 
-@export var air_cap: float = 0.85
+@export var air_cap: float = 0.5
 @export var air_accel: float = 200.0
 @export var air_move_speed: float = 1000.0
+
+@export var push_strength: float = 15.0
 
 var noclip_cam_wish_dir: Vector3 = Vector3.ZERO
 var noclip_speed_multi: float = 2.0
@@ -46,19 +50,31 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
 			rotate_y(-event.relative.x * look_sens)
-			%PlayerCamera.rotate_x(event.relative.y * look_sens)
-	%PlayerCamera.rotation.x = clamp(%PlayerCamera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			%PlayerCamera.rotate_x(-event.relative.y * look_sens)
+			%PlayerCamera.rotation.y = clamp(%PlayerCamera.rotation.y, 0, 0)
+			%PlayerCamera.rotation.x = clamp(%PlayerCamera.rotation.x, deg_to_rad(-85), deg_to_rad(85))
 
 func get_move_speed() -> float:
 	if is_crouched:
 		return walk_speed * 0.5
 	return sprint_speed if Input.is_action_pressed("sprint") else walk_speed
 
+func get_move_celeration(acceleration: bool) -> float:
+	#if acceleration:
+		#return sprint_accel if Input.is_action_pressed("sprint") else walk_accel
+	#else:
+		#return sprint_decel if Input.is_action_pressed("sprint") else walk_decel
+	
+	if acceleration:
+		return walk_accel
+	else:
+		return walk_decel
+
 func _physics_process(delta: float) -> void:
 	if is_on_floor(): last_frame_on_floor = Engine.get_physics_frames()
 	
-	var input_dir = Input.get_vector("left", "right", "forward", "backward").normalized()
-	wish_dir = self.global_transform.basis * Vector3(-input_dir.x, 0., -input_dir.y)
+	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	noclip_cam_wish_dir = %PlayerCamera.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
 	handle_crouch(delta)
@@ -72,6 +88,7 @@ func _physics_process(delta: float) -> void:
 			handle_air_physics(delta)
 		
 		if not snap_up_stairs(delta):
+			handle_rigidbodies()
 			move_and_slide()
 			snap_down_stairs()
 	
@@ -81,11 +98,11 @@ func handle_ground_physics(delta) -> void:
 	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
 	var add_speed_until_cap = get_move_speed() - cur_speed_in_wish_dir
 	if add_speed_until_cap > 0:
-		var accel_speed = ground_accel * delta * get_move_speed()
+		var accel_speed = get_move_celeration(true) * delta * get_move_speed()
 		accel_speed = min(accel_speed, add_speed_until_cap)
 		self.velocity += accel_speed * wish_dir
 	
-	var control = max(self.velocity.length(), ground_decel)
+	var control = max(self.velocity.length(), get_move_celeration(false))
 	var drop = control * ground_friction * delta
 	var new_speed = max(self.velocity.length() - drop, 0.0)
 	if self.velocity.length() > 0:
@@ -107,7 +124,6 @@ func handle_air_physics(delta) -> void:
 		self.velocity += accel_speed * wish_dir
 
 @onready var orig_standing_height = $Collider.shape.height
-
 func handle_crouch(delta) -> void:
 	var crouched_last_frame = is_crouched
 	if Input.is_action_pressed("crouch"):
@@ -151,7 +167,10 @@ func handle_noclip(delta) -> bool:
 	return true
 
 func _process(delta: float) -> void:
-	pass
+	if scan_for_interactables():
+		scan_for_interactables().hover_cursor(self)
+		if Input.is_action_just_pressed("interact"):
+			scan_for_interactables().interact_with()
 
 var camera_origin_pos = null
 func save_camera_origin_smoothing():
@@ -219,3 +238,27 @@ func snap_up_stairs(delta) -> bool:
 			snapped_to_stairs_last_frame = true
 			return true
 	return false
+
+func handle_rigidbodies() -> void:
+	for i in get_slide_collision_count():
+		var c := get_slide_collision(i)
+		if c.get_collider() is RigidBody3D:
+			var push_dir = -c.get_normal()
+			var velocity_diff_push_dir = self.velocity.dot(push_dir) - c.get_collider().linear_velocity.dot(push_dir)
+			velocity_diff_push_dir = max(0., velocity_diff_push_dir)
+			
+			const PLAYER_MASS: float = 85.0
+			var mass_ratio = min(1., PLAYER_MASS / c.get_collider().mass)
+			
+			push_dir.y = 0
+			
+			var push_force = mass_ratio * push_strength
+			c.get_collider().apply_impulse(push_dir * velocity_diff_push_dir * push_force, c.get_position() - c.get_collider().global_position)
+
+func scan_for_interactables() -> InteractableComponent:
+	for i in %InteractShape.get_collision_count():
+		if i > 0 and %InteractShape.get_collider(0) != $".":
+			return null
+		if %InteractShape.get_collider(i).get_node_or_null("InteractableComponent") is InteractableComponent:
+			return %InteractShape.get_collider(i).get_node_or_null("InteractableComponent")
+	return null

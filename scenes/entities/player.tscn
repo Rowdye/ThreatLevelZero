@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://dl7f1q4g0oa3m" path="res://scenes/entities/player.gd" id="1_ucweq"]
 [ext_resource type="Environment" uid="uid://d15cy8ugiut2r" path="res://settings/enviroment.tres" id="2_1ie0h"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_08t41"]
+radius = 0.25
+
 [sub_resource type="SphereMesh" id="SphereMesh_ft3ro"]
 radius = 0.125
 height = 0.25
@@ -43,23 +46,30 @@ unique_name_in_owner = true
 [node name="PlayerCamera" type="Camera3D" parent="HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer" unique_id=675327107]
 unique_name_in_owner = true
 physics_interpolation_mode = 1
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 cull_mask = 1048573
 environment = ExtResource("2_1ie0h")
 doppler_tracking = 2
 fov = 120.0
 
+[node name="InteractShape" type="ShapeCast3D" parent="HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer/PlayerCamera" unique_id=886096838]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_08t41")
+target_position = Vector3(0, 0, -1.75)
+max_results = 2
+collision_mask = 7
+collide_with_areas = true
+
 [node name="Hands" type="Node3D" parent="." unique_id=1588884615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="LeftHand" type="MeshInstance3D" parent="Hands" unique_id=92922879]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, 0.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.25)
 mesh = SubResource("SphereMesh_ft3ro")
 
 [node name="Marker3D" type="Marker3D" parent="Hands/LeftHand" unique_id=870312431]
 
 [node name="RightHand" type="MeshInstance3D" parent="Hands" unique_id=1739190114]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, 0.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, -0.25)
 mesh = SubResource("SphereMesh_ft3ro")
 
 [node name="Marker3D" type="Marker3D" parent="Hands/RightHand" unique_id=1415463615]
@@ -76,7 +86,7 @@ shape = SubResource("CylinderShape3D_blnjl")
 unique_name_in_owner = true
 
 [node name="Face" type="Label3D" parent="WorldModel" unique_id=1017879526]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.03255821, 1.45, 0.4)
+transform = Transform3D(4.371139e-08, -1, -8.742278e-08, -1, -4.371139e-08, 0, -3.821371e-15, 8.742278e-08, -1, -0.042441793, 1.45, -0.40000004)
 pixel_size = 0.01
 shaded = true
 double_sided = false
@@ -84,7 +94,7 @@ text = ": )"
 
 [node name="StairsFrontRaycast" type="RayCast3D" parent="." unique_id=44857707]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.75)
 target_position = Vector3(0, -0.55, 0)
 
 [node name="StairsUnderRaycast" type="RayCast3D" parent="." unique_id=516163340]

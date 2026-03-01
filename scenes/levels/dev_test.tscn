@@ -2,6 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://r2f8ytlsuine" path="res://scenes/placeholder_pieces/stairspiece.tscn" id="1_uy3bk"]
 [ext_resource type="PackedScene" uid="uid://c3fxmfooxydji" path="res://scenes/entities/player.tscn" id="2_ufac7"]
+[ext_resource type="Script" uid="uid://cdcxtj5gulg77" path="res://scenes/levels/door.gd" id="3_42hnw"]
+[ext_resource type="Script" uid="uid://3a0lcmxvf2ob" path="res://interactable_component.gd" id="3_ispid"]
+[ext_resource type="Texture2D" uid="uid://drb0mpjowae6i" path="res://materials/bafkreiczkucg4h6xgzzaw3revsymjckmle42lv5j3vulbxwzutarb7mb7q.jpg" id="5_r3y7d"]
+[ext_resource type="Texture2D" uid="uid://b54533c3w1jji" path="res://materials/646349e9ee6236743034a406_79.png" id="6_si0tr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7dm0k"]
 albedo_color = Color(0.44291076, 0.44291076, 0.44291073, 1)
@@ -66,6 +70,72 @@ size = Vector3(1, 5, 5)
 size = Vector3(10, 1, 10)
 
 [sub_resource type="TorusMesh" id="TorusMesh_42hnw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ufac7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ufac7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ispid"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_42hnw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r3y7d"]
+size = Vector3(1.4, 2.4, 0.1)
+
+[sub_resource type="Animation" id="Animation_42hnw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ispid"]
+resource_name = "door_open1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1.6580628, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r3y7d"]
+resource_name = "door_open2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.6580628, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_42hnw"]
+_data = {
+&"RESET": SubResource("Animation_42hnw"),
+&"door_open1": SubResource("Animation_ispid"),
+&"door_open2": SubResource("Animation_r3y7d")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42hnw"]
+albedo_color = Color(0, 0, 1, 1)
 
 [node name="DevTest" type="Node3D" unique_id=123602918]
 
@@ -259,6 +329,10 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.5
 texture_filter = 2
 text = "3m"
 
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1355180415]
+transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 1, 0, 11.5, 22.25)
+texture = ExtResource("6_si0tr")
+
 [node name="DonutShack" type="Node3D" parent="." unique_id=148231981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.25, 0, 17.5)
 
@@ -357,3 +431,235 @@ size = Vector3(1, 1, 1.25)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.075, 1.66, 0)
 use_collision = true
 size = Vector3(1, 1, 1.25)
+
+[node name="PhysicsTest" type="Node3D" parent="." unique_id=1452840563]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9, -0.175, 15)
+
+[node name="Spheres" type="Node3D" parent="PhysicsTest" unique_id=115137468]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="RigidSphere1kg" type="RigidBody3D" parent="PhysicsTest/Spheres" unique_id=581033156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="PhysicsTest/Spheres/RigidSphere1kg" unique_id=282131441]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsTest/Spheres/RigidSphere1kg" unique_id=625285093]
+shape = SubResource("SphereShape3D_ufac7")
+
+[node name="Label3D" type="Label3D" parent="PhysicsTest/Spheres/RigidSphere1kg" unique_id=568472026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044870377, 0, 0.5)
+texture_filter = 2
+text = "1kg"
+
+[node name="RigidSphere10kg" type="RigidBody3D" parent="PhysicsTest/Spheres" unique_id=451607676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.75, 0)
+mass = 10.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="PhysicsTest/Spheres/RigidSphere10kg" unique_id=806379320]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsTest/Spheres/RigidSphere10kg" unique_id=496660956]
+shape = SubResource("SphereShape3D_ufac7")
+
+[node name="Label3D" type="Label3D" parent="PhysicsTest/Spheres/RigidSphere10kg" unique_id=1698137487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044870377, 0, 0.5)
+texture_filter = 2
+text = "10kg"
+
+[node name="RigidSphere100kg" type="RigidBody3D" parent="PhysicsTest/Spheres" unique_id=480368137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.75, 0)
+mass = 100.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="PhysicsTest/Spheres/RigidSphere100kg" unique_id=1060697993]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsTest/Spheres/RigidSphere100kg" unique_id=1891172653]
+shape = SubResource("SphereShape3D_ufac7")
+
+[node name="Label3D" type="Label3D" parent="PhysicsTest/Spheres/RigidSphere100kg" unique_id=1455900922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044870377, 0, 0.5)
+texture_filter = 2
+text = "100kg"
+
+[node name="Cubes" type="Node3D" parent="PhysicsTest" unique_id=1394570385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="RigidCube5kg" type="RigidBody3D" parent="PhysicsTest/Cubes" unique_id=1740585751]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.75, 0)
+mass = 5.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PhysicsTest/Cubes/RigidCube5kg" unique_id=1697568479]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsTest/Cubes/RigidCube5kg" unique_id=1512399319]
+shape = SubResource("BoxShape3D_ufac7")
+
+[node name="Label3D" type="Label3D" parent="PhysicsTest/Cubes/RigidCube5kg" unique_id=157096449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044870377, 0, 0.525)
+texture_filter = 2
+text = "5kg"
+
+[node name="RigidCube20kg" type="RigidBody3D" parent="PhysicsTest/Cubes" unique_id=1454089574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.75, 0)
+mass = 15.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsTest/Cubes/RigidCube20kg" unique_id=1013923288]
+shape = SubResource("BoxShape3D_ispid")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PhysicsTest/Cubes/RigidCube20kg" unique_id=1098444046]
+
+[node name="Label3D" type="Label3D" parent="PhysicsTest/Cubes/RigidCube20kg" unique_id=1761012208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044870377, 0, 0.525)
+texture_filter = 2
+text = "15kg"
+
+[node name="RigidCube50kg" type="RigidBody3D" parent="PhysicsTest/Cubes" unique_id=2102306925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.75, 0)
+mass = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsTest/Cubes/RigidCube50kg" unique_id=201710003]
+shape = SubResource("BoxShape3D_42hnw")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PhysicsTest/Cubes/RigidCube50kg" unique_id=1585483444]
+
+[node name="Label3D" type="Label3D" parent="PhysicsTest/Cubes/RigidCube50kg" unique_id=256803537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044870377, 0, 0.525)
+texture_filter = 2
+text = "50kg"
+
+[node name="RigidSphere10kg" type="RigidBody3D" parent="." unique_id=977604513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.75, -0.75)
+mass = 10.0
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="RigidSphere10kg" unique_id=655825021]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidSphere10kg" unique_id=1304948095]
+shape = SubResource("SphereShape3D_ufac7")
+
+[node name="Label3D" type="Label3D" parent="RigidSphere10kg" unique_id=877614269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044870377, 0, 0.5)
+texture_filter = 2
+text = "10kg"
+
+[node name="DoorTest" type="Node3D" parent="." unique_id=474575273]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0)
+
+[node name="DoorBody" type="AnimatableBody3D" parent="DoorTest" unique_id=1635405850]
+physics_interpolation_mode = 1
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, -0.75, 0, 0)
+script = ExtResource("3_42hnw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorTest/DoorBody" unique_id=621274458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.70000005, 1.2, -1.4901161e-08)
+shape = SubResource("BoxShape3D_r3y7d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DoorTest/DoorBody" unique_id=337066224]
+libraries/ = SubResource("AnimationLibrary_42hnw")
+
+[node name="InteractableComponent" type="Node3D" parent="DoorTest/DoorBody" unique_id=512178311]
+script = ExtResource("3_ispid")
+interactable_name = "door"
+metadata/_custom_type_script = "uid://3a0lcmxvf2ob"
+
+[node name="DoorModel" type="CSGBox3D" parent="DoorTest/DoorBody/InteractableComponent" unique_id=591509389]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 1.2, 0)
+size = Vector3(1.4, 2.4, 0.1)
+material = SubResource("StandardMaterial3D_42hnw")
+
+[node name="Hinge" type="CSGTorus3D" parent="DoorTest/DoorBody/InteractableComponent/DoorModel" unique_id=724612985]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.6, 0, 0)
+calculate_tangents = false
+inner_radius = 0.1
+outer_radius = 0.2
+
+[node name="CSGBox3D" type="CSGBox3D" parent="DoorTest" unique_id=462282144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 1.2, 0)
+use_collision = true
+size = Vector3(1, 2.4, 0.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="DoorTest" unique_id=773998666]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1750001, 1.2, 0)
+use_collision = true
+size = Vector3(1, 2.4, 0.5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="DoorTest" unique_id=797740077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.037499905, 2.65, 0)
+use_collision = true
+size = Vector3(3.425, 0.5, 0.5)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="DoorTest" unique_id=1951319739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.125, 1.2, -1.125)
+use_collision = true
+size = Vector3(0.25, 2.4, 1.75)
+
+[node name="Sprite3D" type="Sprite3D" parent="DoorTest/CSGBox3D4" unique_id=676646111]
+transform = Transform3D(-4.5896953e-09, 0, -1, 0, 0.14999999, 0, 0.10499999, 0, -4.371139e-08, 0.15, 0, 0.325)
+shaded = true
+texture = ExtResource("5_r3y7d")
+
+[node name="LadderTest" type="Node3D" parent="." unique_id=690640781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 0)
+
+[node name="Model" type="Node3D" parent="LadderTest" unique_id=1789689922]
+
+[node name="Bars" type="Node3D" parent="LadderTest/Model" unique_id=411057972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 3.5390258e-08)
+
+[node name="Bar1" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=1360628275]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, -2, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar2" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=587049263]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, -1.5, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar3" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=488575145]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, -1, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar4" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=2064705867]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, -0.5, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar5" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=1507204410]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, 0, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar6" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=1306188119]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, 0.5, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar7" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=341234096]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, 1, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar8" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=1703280677]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, 1.5, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar9" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=1428044305]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, 2, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Bar10" type="CSGCylinder3D" parent="LadderTest/Model/Bars" unique_id=1682935353]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.0031251907, 2.5, 0)
+radius = 0.075
+height = 0.61875
+
+[node name="Pole1" type="CSGCylinder3D" parent="LadderTest/Model" unique_id=258752890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.375, 2.625, 0)
+radius = 0.1
+height = 5.25
+
+[node name="Pole2" type="CSGCylinder3D" parent="LadderTest/Model" unique_id=113985743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.375, 2.625, 0)
+radius = 0.1
+height = 5.25
+
+[connection signal="interacted" from="DoorTest/DoorBody/InteractableComponent" to="DoorTest/DoorBody" method="toggle_open"]

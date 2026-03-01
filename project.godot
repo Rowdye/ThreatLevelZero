@@ -15,6 +15,10 @@ run/main_scene="uid://cufiso542tiwp"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+UiManager="*uid://lmgetj2ah0bn"
+
 [input]
 
 left={
@@ -108,6 +112,8 @@ dev_noclip={
 common/physics_ticks_per_second=90
 3d/physics_engine="Jolt Physics"
 3d/default_gravity=13.0
+3d/default_linear_damp=0.25
+3d/default_angular_damp=0.5
 common/physics_interpolation=true
 
 [rendering]
