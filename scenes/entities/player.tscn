@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dl7f1q4g0oa3m" path="res://scenes/entities/player.gd" id="1_ucweq"]
 [ext_resource type="Environment" uid="uid://d15cy8ugiut2r" path="res://settings/enviroment.tres" id="2_1ie0h"]
+[ext_resource type="PackedScene" uid="uid://c1iyriligh63b" path="res://weapons/weapon_manager.tscn" id="3_1ie0h"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_08t41"]
 radius = 0.25
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1ie0h"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ft3ro"]
 radius = 0.125
@@ -59,6 +62,27 @@ max_results = 2
 collision_mask = 7
 collide_with_areas = true
 
+[node name="BulletCast" type="RayCast3D" parent="HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer/PlayerCamera" unique_id=1715858111]
+target_position = Vector3(0, 0, -100)
+collision_mask = 59
+
+[node name="ViewmodelContainer" type="Node3D" parent="HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer/PlayerCamera" unique_id=1333370713]
+
+[node name="TPOrbitCamYaw" type="Node3D" parent="HeadContainer" unique_id=1642149397]
+unique_name_in_owner = true
+
+[node name="TPOrbitCamPitch" type="Node3D" parent="HeadContainer/TPOrbitCamYaw" unique_id=1515817125]
+unique_name_in_owner = true
+
+[node name="SpringArm3D" type="SpringArm3D" parent="HeadContainer/TPOrbitCamYaw/TPOrbitCamPitch" unique_id=145749083]
+shape = SubResource("SphereShape3D_1ie0h")
+spring_length = 3.0
+
+[node name="ThirdPersonPlayerCamera" type="Camera3D" parent="HeadContainer/TPOrbitCamYaw/TPOrbitCamPitch/SpringArm3D" unique_id=1887579757]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+fov = 120.0
+
 [node name="Hands" type="Node3D" parent="." unique_id=1588884615]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
@@ -73,6 +97,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.25, -0.25)
 mesh = SubResource("SphereMesh_ft3ro")
 
 [node name="Marker3D" type="Marker3D" parent="Hands/RightHand" unique_id=1415463615]
+
+[node name="WeaponManager" parent="." unique_id=1056434412 node_paths=PackedStringArray("player", "bullet_raycast", "viewmodel_container", "worldmodel_container") instance=ExtResource("3_1ie0h")]
+player = NodePath("..")
+bullet_raycast = NodePath("../HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer/PlayerCamera/BulletCast")
+viewmodel_container = NodePath("../HeadContainer/Head/ViewbobLayer/RecoilLayer/SmoothLayer/MiscLayer/PlayerCamera/ViewmodelContainer")
+worldmodel_container = NodePath("../WorldModel/WorldViewmodelContainer")
 
 [node name="Body" type="MeshInstance3D" parent="." unique_id=479163555]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
@@ -91,6 +121,8 @@ pixel_size = 0.01
 shaded = true
 double_sided = false
 text = ": )"
+
+[node name="WorldViewmodelContainer" type="Node3D" parent="WorldModel" unique_id=1518825064]
 
 [node name="StairsFrontRaycast" type="RayCast3D" parent="." unique_id=44857707]
 unique_name_in_owner = true

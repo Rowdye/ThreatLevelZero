@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c1iyriligh63b"]
+
+[ext_resource type="Script" uid="uid://dp7vuc3a725c2" path="res://weapons/weapon_manager.gd" id="1_324ga"]
+[ext_resource type="Resource" uid="uid://tbs4tpk4b1lq" path="res://weapons/pistol.tres" id="2_ol6mq"]
+
+[node name="WeaponManager" type="Node3D" unique_id=1056434412]
+script = ExtResource("1_324ga")
+current_weapon = ExtResource("2_ol6mq")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=74875556]

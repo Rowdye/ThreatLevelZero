@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://mxx52qb07a86"]
+
+[ext_resource type="PackedScene" uid="uid://ffaqn7c01isd" path="res://models/weapons/practice_pistol.fbx" id="1_1ohd4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ohd4"]
+albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5icxk"]
+albedo_color = Color(0.3180198, 0.31801978, 0.31801975, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f30ot"]
+albedo_color = Color(0.18717614, 0.18717614, 0.18717614, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcwqf"]
+albedo_color = Color(0.646029, 0.646029, 0.646029, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o30jq"]
+albedo_color = Color(0.6542321, 0.6542321, 0.654232, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkml6"]
+albedo_color = Color(0.62152386, 0.62152386, 0.6215238, 1)
+
+[node name="Pistol" unique_id=1572833877 instance=ExtResource("1_1ohd4")]
+
+[node name="root" parent="." index="0" unique_id=1965399749]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.175, 0.15)
+
+[node name="magazine_1" parent="root/magazine" parent_id_path=PackedInt32Array(1773250897) index="1" unique_id=245421417]
+material_override = SubResource("StandardMaterial3D_1ohd4")
+
+[node name="slide" parent="root" index="2" unique_id=9423827]
+material_override = SubResource("StandardMaterial3D_5icxk")
+
+[node name="frame" parent="root" index="3" unique_id=320543972]
+material_override = SubResource("StandardMaterial3D_f30ot")
+
+[node name="trigger" parent="root" index="4" unique_id=1542362952]
+material_override = SubResource("StandardMaterial3D_fcwqf")
+
+[node name="barrel" parent="root" index="5" unique_id=710571369]
+material_override = SubResource("StandardMaterial3D_o30jq")
+
+[node name="mag_eject" parent="root" index="6" unique_id=1558258518]
+material_override = SubResource("StandardMaterial3D_tkml6")

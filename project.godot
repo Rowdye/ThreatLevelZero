@@ -19,6 +19,14 @@ config/icon="res://icon.svg"
 
 UiManager="*uid://lmgetj2ah0bn"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/project-time-tracker/plugin.cfg")
+
+[global_group]
+
+Ladder=""
+
 [input]
 
 left={
@@ -106,6 +114,7 @@ dev_noclip={
 3d_physics/layer_5="Player"
 3d_physics/layer_6="Enemy"
 3d_physics/layer_7="Projectile"
+3d_physics/layer_8="Ladder"
 
 [physics]
 

@@ -1,6 +1,13 @@
 extends CharacterBody3D
 
 @export var look_sens: float = 0.003
+enum CameraStyle {
+	FIRST_PERSON, THIRD_PERSON_FREELOOK
+}
+@export var camera_style: CameraStyle = CameraStyle.FIRST_PERSON:
+	set(v):
+		camera_style = v
+		update_camera_style()
 
 var wish_dir: Vector3 = Vector3.ZERO
 
@@ -32,6 +39,8 @@ var last_frame_on_floor = -INF
 
 @export var push_strength: float = 15.0
 
+@export var climb_speed: float = 3.0
+
 var noclip_cam_wish_dir: Vector3 = Vector3.ZERO
 var noclip_speed_multi: float = 2.0
 var noclip_enabled: bool = false
@@ -40,6 +49,10 @@ func _ready() -> void:
 	for child in %WorldModel.find_children("*", "VisualInstance3D"):
 		child.set_layer_mask_value(1, false)
 		child.set_layer_mask_value(2, true)
+	#for child in %WorldModel.find_children("*", "Node3D"):
+		#child.visible = false
+	
+	update_camera_style()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -49,10 +62,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
-			rotate_y(-event.relative.x * look_sens)
+			if camera_style == CameraStyle.THIRD_PERSON_FREELOOK:
+				%TPOrbitCamYaw.rotate_y(-event.relative.x * look_sens)
+			
 			%PlayerCamera.rotate_x(-event.relative.y * look_sens)
-			%PlayerCamera.rotation.y = clamp(%PlayerCamera.rotation.y, 0, 0)
 			%PlayerCamera.rotation.x = clamp(%PlayerCamera.rotation.x, deg_to_rad(-85), deg_to_rad(85))
+			%PlayerCamera.rotation.y = clamp(%PlayerCamera.rotation.y, 0, 0)
+			
+			%TPOrbitCamPitch.rotate_x(-event.relative.y * look_sens)
+			%TPOrbitCamPitch.rotation.x = clamp(%TPOrbitCamPitch.rotation.x, deg_to_rad(-85), deg_to_rad(85))
 
 func get_move_speed() -> float:
 	if is_crouched:
@@ -73,13 +91,18 @@ func get_move_celeration(acceleration: bool) -> float:
 func _physics_process(delta: float) -> void:
 	if is_on_floor(): last_frame_on_floor = Engine.get_physics_frames()
 	
+	update_camera_style()
+	
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-	noclip_cam_wish_dir = %PlayerCamera.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
+	noclip_cam_wish_dir = get_active_camera().global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
+	
+	if camera_style == CameraStyle.THIRD_PERSON_FREELOOK:
+		wish_dir = %TPOrbitCamYaw.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
 	handle_crouch(delta)
 	
-	if not handle_noclip(delta):
+	if not handle_noclip(delta) and not handle_ladder_physics(delta):
 		if is_on_floor() or snapped_to_stairs_last_frame:
 			handle_ground_physics(delta)
 			if Input.is_action_just_pressed("jump"):
@@ -166,11 +189,74 @@ func handle_noclip(delta) -> bool:
 	
 	return true
 
+var cur_ladder: Area3D = null
+func handle_ladder_physics(delta) -> bool:
+	var was_climbing_ladder: bool = cur_ladder and cur_ladder.overlaps_body(self)
+	
+	if not was_climbing_ladder:
+		cur_ladder = null
+		for ladder in get_tree().get_nodes_in_group("Ladder"):
+			if ladder.overlaps_body(self):
+				cur_ladder = ladder
+				break
+	if cur_ladder == null:
+		return false
+	
+	var ladder_globaltransform: Transform3D = cur_ladder.global_transform
+	var position_relative_to_ladder := ladder_globaltransform.affine_inverse() * self.global_position
+	
+	var up_axis := Input.get_action_strength("forward") - Input.get_action_strength("backward")
+	var side_axis := Input.get_action_strength("right") - Input.get_action_strength("left")
+	var ladder_up_axis = ladder_globaltransform.affine_inverse().basis * get_active_camera().global_transform.basis * Vector3(0, 0, -up_axis)
+	var ladder_side_axis = ladder_globaltransform.affine_inverse().basis * get_active_camera().global_transform.basis * Vector3(side_axis, 0, 0)
+	
+	var ladder_strafe_velocity: float = climb_speed * (ladder_side_axis.x + ladder_up_axis.x)
+	var ladder_climb_velocity: float = climb_speed * -ladder_side_axis.z
+	var cam_up_amount: float = %PlayerCamera.basis.z.dot(cur_ladder.basis.z)
+	var up_wish := Vector3.UP.rotated(Vector3(1, 0, 0), deg_to_rad(-45 * cam_up_amount)).dot(ladder_up_axis)
+	ladder_climb_velocity += climb_speed * up_wish
+	
+	var should_dismount = false
+	if not was_climbing_ladder:
+		var mounting_from_top = position_relative_to_ladder.y > cur_ladder.get_node("TopOfLadderMarker").position.y
+		if mounting_from_top:
+			if ladder_climb_velocity > 0: should_dismount = true
+		else:
+			if (ladder_globaltransform.affine_inverse().basis * wish_dir).z >= 0: should_dismount = true
+		
+		if abs(position_relative_to_ladder.z) > 0.1: should_dismount = true
+	
+	if is_on_floor() and ladder_climb_velocity <= 0: should_dismount = true
+	
+	if should_dismount:
+		cur_ladder = null
+		return false
+	
+	if was_climbing_ladder and Input.is_action_just_pressed("jump"): 
+		self.velocity = cur_ladder.global_transform.basis.z * (jump_velocity / 2)
+		cur_ladder = null
+		return false
+	
+	self.velocity = ladder_globaltransform.basis * Vector3(ladder_strafe_velocity, ladder_climb_velocity, 0)
+	self.velocity = self.velocity.limit_length(climb_speed)
+	
+	position_relative_to_ladder.z = 0
+	self.global_position = ladder_globaltransform * position_relative_to_ladder
+	
+	move_and_slide()
+	return true
+
 func _process(delta: float) -> void:
 	if scan_for_interactables():
 		scan_for_interactables().hover_cursor(self)
 		if Input.is_action_just_pressed("interact"):
 			scan_for_interactables().interact_with()
+	
+	if camera_style == CameraStyle.THIRD_PERSON_FREELOOK and wish_dir.length():
+		var add_rotation_y = (-self.global_transform.basis.z).signed_angle_to(wish_dir.normalized(), Vector3.UP)
+		var rot_towards = lerp_angle(self.global_rotation.y, self.global_rotation.y + add_rotation_y, max(0.1, abs(add_rotation_y/TAU))) - self.global_rotation.y
+		self.rotation.y += rot_towards
+		%TPOrbitCamYaw.rotation.y -= rot_towards
 
 var camera_origin_pos = null
 func save_camera_origin_smoothing():
@@ -194,6 +280,20 @@ func headbob_effect(delta) -> void:
 		sin(headbob_time * HEADBOB_FREQUENCY) * HEADBOB_MOVE_AMOUNT,
 		0
 	)
+
+func get_active_camera() -> Camera3D:
+	if camera_style == CameraStyle.FIRST_PERSON:
+		return %PlayerCamera
+	else:
+		return %ThirdPersonPlayerCamera
+
+func update_camera_style() -> void:
+	if not is_inside_tree():
+		return
+	var cameras = [%PlayerCamera, %ThirdPersonPlayerCamera]
+	if not cameras.any(func(c: Camera3D): return c.current):
+		return
+	get_active_camera().current = true
 
 func is_surface_steep(normal: Vector3) -> bool:
 	return normal.angle_to(Vector3.UP) > self.floor_max_angle

@@ -137,10 +137,14 @@ _data = {
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42hnw"]
 albedo_color = Color(0, 0, 1, 1)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_si0tr"]
+height = 5.375
+radius = 0.32500002
+
 [node name="DevTest" type="Node3D" unique_id=123602918]
 
 [node name="Player" parent="." unique_id=1577822824 instance=ExtResource("2_ufac7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.25, 16.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0.25, 3.125)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1961532253]
 transform = Transform3D(-0.39073116, -0.8593653, 0.32987946, 0, 0.35836798, 0.93358046, -0.92050487, 0.36477894, -0.14002553, 0, 10.5, 0)
@@ -595,7 +599,7 @@ shaded = true
 texture = ExtResource("5_r3y7d")
 
 [node name="LadderTest" type="Node3D" parent="." unique_id=690640781]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, -1.175)
 
 [node name="Model" type="Node3D" parent="LadderTest" unique_id=1789689922]
 
@@ -654,12 +658,27 @@ height = 0.61875
 
 [node name="Pole1" type="CSGCylinder3D" parent="LadderTest/Model" unique_id=258752890]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.375, 2.625, 0)
+use_collision = true
 radius = 0.1
 height = 5.25
 
 [node name="Pole2" type="CSGCylinder3D" parent="LadderTest/Model" unique_id=113985743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.375, 2.625, 0)
+use_collision = true
 radius = 0.1
 height = 5.25
+
+[node name="Area3D" type="Area3D" parent="LadderTest" unique_id=130324936 groups=["Ladder"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0.47500002)
+collision_layer = 129
+collision_mask = 16
+
+[node name="TopOfLadderMarker" type="Marker3D" parent="LadderTest/Area3D" unique_id=986222995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -0.125)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LadderTest/Area3D" unique_id=1541215486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1875, 0)
+shape = SubResource("CylinderShape3D_si0tr")
+debug_color = Color(0.8172691, 0.0018919236, 0.9720215, 0.41960785)
 
 [connection signal="interacted" from="DoorTest/DoorBody/InteractableComponent" to="DoorTest/DoorBody" method="toggle_open"]

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponResource" format=3 uid="uid://tbs4tpk4b1lq"]
+
+[ext_resource type="Script" uid="uid://bbcw11ix0sbe7" path="res://weapons/weapon_resource.gd" id="1_f1n8n"]
+[ext_resource type="PackedScene" uid="uid://mxx52qb07a86" path="res://weapons/pistol.tscn" id="2_m7cpi"]
+
+[resource]
+script = ExtResource("1_f1n8n")
+viewmodel = ExtResource("2_m7cpi")
+worldmodel = ExtResource("2_m7cpi")
+vm_position = Vector3(0.43, -0.30500007, -0.37)
+vm_rotation = Vector3(0, 3.1415925, 0)
+metadata/_custom_type_script = "uid://bbcw11ix0sbe7"
